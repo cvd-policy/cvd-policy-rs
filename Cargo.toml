@@ -6,6 +6,7 @@ rust-version = "1.88"
 license = "Apache-2.0"
 description = "Deterministic Rust library for validating and evaluating CVD Policy documents."
 readme = "README.md"
+repository = "https://github.com/cvd-policy/cvd-policy-rs"
 
 [lib]
 name = "cvd_policy"

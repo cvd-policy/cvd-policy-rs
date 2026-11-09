@@ -1,6 +1,6 @@
 # Integrationsübergabe
 
-Diese Übergabe gilt für Crate-Revision `dfa1d5347a23938e5b8ef9b68f5128dc4c6e3ba9` auf lokalem Branch `task/rust-v1` (kein Remote): Paket `cvd-policy` `0.1.0`, crate root `cvd_policy`, Edition 2021, MSRV 1.88; Crate-Pfad `/home/undef/Projects/skalvar/cvd/cvd_policy/rust`. Version/Pfad begründen keine Registry-Verfügbarkeit.
+Diese Übergabe gilt für Crate-Revision `dfa1d5347a23938e5b8ef9b68f5128dc4c6e3ba9` auf lokalem Branch `task/rust-v1` (kein Remote zum damaligen Checkpoint): Paket `cvd-policy` `0.1.0`, crate root `cvd_policy`, Edition 2021, MSRV 1.88; Crate-Pfad `/home/undef/Projects/skalvar/cvd/cvd_policy/rust`. Version/Pfad begründen keine Registry-Verfügbarkeit.
 
 ## Lokaler Build und Beispiele
 
@@ -60,3 +60,14 @@ Only after adapter mapping and output comparison are demonstrated should Agent2 
 ## Remaining final gates
 
 The source commit listed above is the reviewed implementation revision, not a self-referential documentation commit. Remaining obligations: Agent2 product endpoint/response mapping and cutover, consumer `serde_json/arbitrary_precision` feature-unification review of JSON roundtrips, and any final revalidation after documentation commit. Do not automatically fall back to Node on Rust errors/panics/timeouts; after proven cutover remove only superseded wrappers/dependencies, not unrelated Node dependencies.
+
+## Git dependency
+
+Use the reviewed Library commit directly from the public repository:
+
+```toml
+[dependencies]
+cvd-policy = { git = "https://github.com/cvd-policy/cvd-policy-rs.git", rev = "8800a50fca690d75b72e35d897588dbf83b875dc" }
+```
+
+Remote reachability of this commit has not yet been verified; the manager will confirm it after push. The crate is not yet published to crates.io; see [`RELEASING.md`](RELEASING.md).

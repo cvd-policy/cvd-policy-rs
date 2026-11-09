@@ -1,6 +1,6 @@
 # cvd-policy
 
-Deterministischer Rust-Core zum Parsen, Validieren und lokalen Auswerten von CVD Policy Version 1. Dies ist eine eigenständige zweite Codeimplementierung, keine unabhängige Implementierung durch eine zweite Organisation. Sie ist kein neues öffentliches Repository und macht keine Registry-Verfügbarkeitszusage.
+Deterministischer Rust-Core zum Parsen, Validieren und lokalen Auswerten von CVD Policy Version 1. Dies ist eine eigenständige zweite Codeimplementierung, keine unabhängige Implementierung durch eine zweite Organisation. Repository: [cvd-policy/cvd-policy-rs](https://github.com/cvd-policy/cvd-policy-rs).
 
 ## Paket und Status
 
@@ -8,6 +8,10 @@ Deterministischer Rust-Core zum Parsen, Validieren und lokalen Auswerten von CVD
 - Edition 2021, MSRV Rust 1.88 (geprüft)
 - Lizenz des Rust-Codes: Apache-2.0; vendorte Spec-/Corpus-Quellen behalten ihre eigenen Lizenzen
 - Keine Netzwerk- oder Dateisystem-I/O und kein Zugriff auf die Systemuhr im Core; Zeit kommt explizit vom Aufrufer
+
+## Release-Status
+
+Die crates.io-Veröffentlichung steht noch aus; `cvd-policy` 0.1.0 ist derzeit nicht verfügbar. Release-Ablauf und Bootstrap: [`docs/RELEASING.md`](docs/RELEASING.md).
 
 Manager-gemeldete Prüfungen: offline/locked und ohne Node/npm im PATH auf Rust 1.88.0 liefen 101 Unit-, 7 Conformance-Loop-, 1 Interop-Fixture-, 1 Provenienz- und 9 Doctests; 0 übersprungen, 0 Warnungen. Die Conformance-Loops umfassen 198 Baseline-Vektoren (10 valid, 47 invalid, 8 raw-invalid, 19 Security.txt, 55 Evaluation, 42 CSAF, 17 URI), hinzu kommen 14 native Interop-Extras. MSRV no-default-features Tests, MSRV all-target/all-feature Clippy `-Dwarnings` und MSRV rustdoc `-Dwarnings` bestanden. Stable `fmt` und all-target Clippy ebenfalls bestanden. `cargo +1.88 run --example integration` bestand: `report_only`, Permission `publisher-stated-prohibited`, CSAF `Advertised`, Host `usable=true`. Der 220-Fall-Replay mit identischen gespeicherten Inputs bestand; Request-SHA-256 `3d787d16bf28d51abaf7c446fe32c2dbf9f91f367255262f86a71b44e6d5cefd`, committierbarer Bericht [`tools/interop/artifacts/report.json`](tools/interop/artifacts/report.json), zusätzlicher Replaybericht `/tmp/opencode/cvd-rust-interop-replay/report.json`. Zwölf abweichende Ergebniszeilen (zwei interne Darstellungsfälle, zehn TypeScript-Verhaltensabweichungen) sind in [`docs/CONFORMANCE.md`](docs/CONFORMANCE.md) normativ eingeordnet. Packaging einschließlich verifiziertem Archivconsumer ist bestanden; Remote-CI und Produkt-Cutover bleiben offen. Dies ist keine pauschale Drop-in-Freigabe.
 
@@ -75,4 +79,4 @@ cvd-policy = { path = "/home/undef/Projects/skalvar/cvd/cvd_policy/rust", versio
 
 The core does not discover/fetch, publish releases, submit CSAF reports, validate CSAF report documents, or assert that advertised channels actually receive reports. Those remain product/adapter/transport/publisher responsibilities. See the concrete endpoint mapping and cutover obligations in [`docs/INTEGRATION.md#produktquellen-und-snapshot-belege`](docs/INTEGRATION.md#produktquellen-und-snapshot-belege) and the 85-requirement evidence matrix in [`docs/requirements.md`](docs/requirements.md).
 
-The reviewed source revision is `dfa1d5347a23938e5b8ef9b68f5128dc4c6e3ba9` on local branch `task/rust-v1` (no remote). The 220-case replay passed on identical saved inputs (198 baseline + 22 extras), request SHA-256 `3d787d16bf28d51abaf7c446fe32c2dbf9f91f367255262f86a71b44e6d5cefd`; see `tools/interop/artifacts/report.json`. Of twelve differing rows, two are allowed internal Authority getter representations and ten are TypeScript behavior differences classified against NormDraft/RFC in [`docs/CONFORMANCE.md`](docs/CONFORMANCE.md). No unresolved Rust result is known in the reviewed set, but this is not universal equivalence or product cutover approval. The archive consumer is verified; Remote-CI and product cutover remain open. Do not add automatic Node fallback on errors, panic, or timeout.
+The reviewed source revision is `dfa1d5347a23938e5b8ef9b68f5128dc4c6e3ba9` on local branch `task/rust-v1` (no remote at that checkpoint). The 220-case replay passed on identical saved inputs (198 baseline + 22 extras), request SHA-256 `3d787d16bf28d51abaf7c446fe32c2dbf9f91f367255262f86a71b44e6d5cefd`; see `tools/interop/artifacts/report.json`. Of twelve differing rows, two are allowed internal Authority getter representations and ten are TypeScript behavior differences classified against NormDraft/RFC in [`docs/CONFORMANCE.md`](docs/CONFORMANCE.md). No unresolved Rust result is known in the reviewed set, but this is not universal equivalence or product cutover approval. The archive consumer is verified; Remote-CI and product cutover remain open. Do not add automatic Node fallback on errors, panic, or timeout.
