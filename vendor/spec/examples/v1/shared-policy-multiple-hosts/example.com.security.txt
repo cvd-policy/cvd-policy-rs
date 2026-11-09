@@ -1,0 +1,4 @@
+Contact: mailto:security@example.com
+CVD-Policy: https://policies.provider.example/shared.json
+Expires: 2027-02-28T08:00:00Z
+Canonical: https://example.com/.well-known/security.txt

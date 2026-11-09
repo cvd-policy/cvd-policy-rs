@@ -1,0 +1,193 @@
+[
+  {
+    "id": "format-package-separation",
+    "type": "spec_contains",
+    "value": "keep package versions separate from the document format version",
+    "requirements": ["DOC-002"]
+  },
+  {
+    "id": "schema-no-defaults",
+    "type": "schema_forbids_keyword",
+    "value": "default",
+    "requirements": ["DOC-006"]
+  },
+  {
+    "id": "strict-core-objects",
+    "type": "schema_core_objects_strict",
+    "requirements": ["DOC-007"]
+  },
+  {
+    "id": "report-request-safety",
+    "type": "spec_contains",
+    "value": "MUST NOT be interpreted to request access to third-party data",
+    "requirements": ["REP-002"]
+  },
+  {
+    "id": "critical-permission-extensions",
+    "type": "spec_contains",
+    "value": "changes permission, prohibition, or conditions MUST be listed as critical",
+    "requirements": ["EXT-004"]
+  },
+  {
+    "id": "signed-file-no-rewrite",
+    "type": "spec_contains",
+    "value": "MUST NOT rewrite it automatically",
+    "requirements": ["DISC-007"]
+  },
+  {
+    "id": "media-type-policy",
+    "type": "spec_contains",
+    "value": "MUST accept `application/cvd-policy+json`",
+    "requirements": ["FETCH-001"]
+  },
+  {
+    "id": "result-not-boolean",
+    "type": "spec_contains",
+    "value": "MUST NOT be a Boolean named `allowed`, `authorized`, or `safe`",
+    "requirements": ["EVAL-001"]
+  },
+  {
+    "id": "nonpositive-fail-closed",
+    "type": "spec_contains",
+    "value": "MUST treat every status other than `publisher-stated-permitted`",
+    "requirements": ["EVAL-002"]
+  },
+  {
+    "id": "evaluation-order",
+    "type": "spec_contains",
+    "value": "an evaluator MUST perform these steps in order",
+    "requirements": ["EVAL-003"]
+  },
+  {
+    "id": "machine-readable-errors",
+    "type": "spec_contains",
+    "value": "MUST be machine-readable and identify affected locations",
+    "requirements": ["ERR-001"]
+  },
+  {
+    "id": "version-dispatch",
+    "type": "spec_contains",
+    "value": "A missing or non-integer `cvd_policy` member MUST produce `invalid-policy`",
+    "requirements": ["DOC-017"]
+  },
+  {
+    "id": "identifier-comparison",
+    "type": "spec_contains",
+    "value": "IDs and ID references are compared as exact case-sensitive strings",
+    "requirements": ["DOC-018"]
+  },
+  {
+    "id": "object-member-table",
+    "type": "spec_contains",
+    "value": "Core object members are exactly as follows",
+    "requirements": ["DOC-019"]
+  },
+  {
+    "id": "retrieval-method-and-credentials",
+    "type": "spec_contains",
+    "value": "MUST retrieve a Policy URI with HTTPS `GET` as defined by RFC 9110",
+    "requirements": ["FETCH-002"]
+  },
+  {
+    "id": "input-failure-boundary",
+    "type": "spec_contains",
+    "value": "Only failures that validate evaluation-call input",
+    "requirements": ["ERR-002"]
+  },
+  {
+    "id": "security-fail-closed",
+    "type": "spec_contains",
+    "value": "MUST fail closed",
+    "requirements": ["SEC-001"]
+  },
+  {
+    "id": "privacy-no-transmission",
+    "type": "spec_contains",
+    "value": "MUST NOT transmit policy text",
+    "requirements": ["PRIV-001"]
+  },
+  {
+    "id": "csaf-specification-binding",
+    "type": "spec_contains",
+    "value": "The one supported value of `specification` MUST be the exact CSAF 2.1 CSD04 URI above.",
+    "requirements": ["CSR-001"]
+  },
+  {
+    "id": "csaf-declaration-shape",
+    "type": "spec_contains",
+    "value": "The extension object MUST contain only the required non-empty `channels` array",
+    "requirements": ["CSR-002"]
+  },
+  {
+    "id": "csaf-exact-contact-references",
+    "type": "spec_contains",
+    "value": "Each `uri` MUST exactly match a contact channel after JSON decoding",
+    "requirements": ["CSR-003"]
+  },
+  {
+    "id": "csaf-contact-preference-order",
+    "type": "spec_contains",
+    "value": "clients selecting channels MUST preserve the preference order of `contact.channels`",
+    "requirements": ["CSR-004"]
+  },
+  {
+    "id": "csaf-absolute-uri-support",
+    "type": "spec_contains",
+    "value": "Each `specification` MUST be an absolute RFC 3986 URI",
+    "requirements": ["CSR-005"]
+  },
+  {
+    "id": "csaf-no-uri-fetch",
+    "type": "spec_contains",
+    "value": "Assessment MUST NOT fetch the extension identifier or `specification` URI.",
+    "requirements": ["CSR-006"]
+  },
+  {
+    "id": "csaf-assessment-priority-and-atomicity",
+    "type": "spec_contains",
+    "value": "Assessment MUST use the order and atomicity above.",
+    "requirements": ["CSR-007"]
+  },
+  {
+    "id": "csaf-critical-use-rejected",
+    "type": "spec_contains",
+    "value": "treat its use as unsupported critical behavior at permission-evaluation step 6",
+    "requirements": ["CSR-008"]
+  },
+  {
+    "id": "csaf-metadata-permission-separation",
+    "type": "spec_contains",
+    "value": "Errors in a non-critical declaration MUST NOT alter core validity or Testing Permission.",
+    "requirements": ["CSR-009"]
+  },
+  {
+    "id": "csaf-current-host-gates",
+    "type": "spec_contains",
+    "value": "Before using an advertised result as a current Discovery Host statement",
+    "requirements": ["CSR-010"]
+  },
+  {
+    "id": "csaf-no-processing-claim",
+    "type": "spec_contains",
+    "value": "A client MUST NOT present a valid declaration as proof that a channel was tested",
+    "requirements": ["CSR-011"]
+  },
+  {
+    "id": "csaf-no-intake-protocol",
+    "type": "spec_contains",
+    "value": "a client MUST NOT infer that a declared HTTPS contact URI is a POST endpoint",
+    "requirements": ["CSR-012"]
+  },
+  {
+    "id": "csaf-human-reports-remain-accepted",
+    "type": "spec_contains",
+    "value": "The declaration MUST NOT require CSAF for every report",
+    "requirements": ["CSR-013"]
+  },
+  {
+    "id": "csaf-no-inferred-identities-or-impact",
+    "type": "spec_contains",
+    "value": "A client MUST NOT infer CSAF publisher identity, affected status, or vulnerability",
+    "requirements": ["CSR-014"]
+  }
+]

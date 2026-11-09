@@ -1,0 +1,445 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cvd-policy.eu/schema/cvd-policy-1.schema.json",
+  "title": "CVD Policy Pre-Standard Version 1 Candidate",
+  "description": "Strict structural schema for the experimental pre-standard Version 1 candidate. Semantic, authority, expiry, and evaluation rules are defined by v1/SPEC.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "cvd_policy",
+    "last_updated",
+    "expires",
+    "organization",
+    "contact",
+    "research",
+    "reporting_scope",
+    "reporting"
+  ],
+  "properties": {
+    "cvd_policy": {
+      "const": 1,
+      "description": "Document format version; this is independent of package versions."
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "organization": {
+      "$ref": "#/$defs/organization"
+    },
+    "contact": {
+      "$ref": "#/$defs/contact"
+    },
+    "research": {
+      "$ref": "#/$defs/research"
+    },
+    "reporting_scope": {
+      "$ref": "#/$defs/reportingScope"
+    },
+    "testing": {
+      "$ref": "#/$defs/testing"
+    },
+    "reporting": {
+      "$ref": "#/$defs/reporting"
+    },
+    "response_targets": {
+      "$ref": "#/$defs/responseTargets"
+    },
+    "disclosure": {
+      "$ref": "#/$defs/disclosure"
+    },
+    "critical_extensions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/absoluteUri"
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "format": "uri"
+      },
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "absoluteUri": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
+    },
+    "httpsUri": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "organization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "uri": {
+          "$ref": "#/$defs/httpsUri"
+        }
+      }
+    },
+    "contact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["channels"],
+      "properties": {
+        "channels": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^(?:mailto:|tel:|https://[^#]*$)"
+          }
+        },
+        "preferred_languages": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 63,
+            "pattern": "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$"
+          }
+        },
+        "encryption": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/absoluteUri"
+          }
+        }
+      }
+    },
+    "research": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["posture"],
+      "properties": {
+        "posture": {
+          "enum": ["open", "limited", "report_only", "prohibited"]
+        },
+        "statement": {
+          "type": "string",
+          "maxLength": 2000
+        }
+      }
+    },
+    "reportingScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "web": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/webScope"
+          }
+        },
+        "products": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/productScope"
+          }
+        }
+      }
+    },
+    "webScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "state", "host", "schemes", "path_prefix", "include_subdomains"],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "state": {
+          "enum": ["in", "out"]
+        },
+        "host": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 253,
+          "pattern": "^[^*/?#@\\s]+$"
+        },
+        "schemes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["http", "https"]
+          }
+        },
+        "ports": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535
+          }
+        },
+        "path_prefix": {
+          "type": "string",
+          "pattern": "^/(?:[^%?#]|%[0-9A-Fa-f]{2})*$"
+        },
+        "include_subdomains": {
+          "type": "boolean"
+        }
+      }
+    },
+    "productScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "state", "name"],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "state": {
+          "enum": ["in", "out"]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "identifiers": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/absoluteUri"
+          }
+        }
+      }
+    },
+    "testing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rules"],
+      "properties": {
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/testingRule"
+          }
+        }
+      }
+    },
+    "testingRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "activity", "state"],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "activity": {
+          "oneOf": [
+            {
+              "enum": ["manual_testing", "automated_scanning", "fuzzing", "credential_testing"]
+            },
+            {
+              "$ref": "#/$defs/absoluteUri"
+            }
+          ]
+        },
+        "state": {
+          "enum": ["permitted", "prohibited"]
+        },
+        "target_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "conditions": {
+          "$ref": "#/$defs/testingConditions"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "state": { "const": "permitted" } },
+            "required": ["state"]
+          },
+          "then": {
+            "required": ["target_ids"],
+            "properties": {
+              "target_ids": true
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": { "const": "permitted" },
+              "activity": { "enum": ["automated_scanning", "fuzzing"] }
+            },
+            "required": ["state", "activity"]
+          },
+          "then": {
+            "required": ["conditions"],
+            "properties": {
+              "conditions": {
+                "type": "object",
+                "required": ["max_requests_per_second", "max_concurrent_requests"],
+                "properties": {
+                  "max_requests_per_second": true,
+                  "max_concurrent_requests": true
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": { "const": "permitted" },
+              "activity": { "const": "credential_testing" }
+            },
+            "required": ["state", "activity"]
+          },
+          "then": {
+            "required": ["conditions"],
+            "properties": {
+              "conditions": {
+                "type": "object",
+                "required": ["max_requests_per_second", "max_concurrent_requests", "test_accounts_only"],
+                "properties": {
+                  "max_requests_per_second": true,
+                  "max_concurrent_requests": true,
+                  "test_accounts_only": true
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "state": { "const": "prohibited" } },
+            "required": ["state"]
+          },
+          "then": {
+            "not": { "required": ["conditions"] }
+          }
+        }
+      ]
+    },
+    "testingConditions": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "max_requests_per_second": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "max_concurrent_requests": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "required_user_agent_token": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[\\x21-\\x7E]+$"
+        },
+        "test_accounts_only": {
+          "const": true
+        }
+      }
+    },
+    "reporting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requested_fields", "proof_of_exploitation"],
+      "properties": {
+        "requested_fields": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "affected_asset",
+              "vulnerability_type",
+              "description",
+              "reproduction_steps",
+              "impact",
+              "environment",
+              "evidence",
+              "researcher_contact",
+              "disclosure_preference"
+            ]
+          }
+        },
+        "proof_of_exploitation": {
+          "enum": ["not_requested", "requested_if_safe", "prohibited"]
+        }
+      }
+    },
+    "responseTargets": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "acknowledgement_days": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "initial_assessment_days": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "update_interval_days": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "disclosure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approach"],
+      "properties": {
+        "approach": {
+          "enum": ["coordinated", "case_by_case", "no_preference"]
+        },
+        "default_days": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "statement": {
+          "type": "string",
+          "maxLength": 2000
+        }
+      }
+    }
+  }
+}

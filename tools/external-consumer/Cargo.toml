@@ -1,0 +1,11 @@
+[package]
+name = "cvd-policy-external-consumer"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.88"
+publish = false
+
+[workspace]
+
+[dependencies]
+cvd-policy = { path = "../.." }

@@ -1,0 +1,81 @@
+{
+  "CSR-001": [
+    "shared:valid-mailto",
+    "shared:unknown-specification",
+    "shared:latest-specification-not-pinned",
+    "shared:specification-case-not-normalized",
+    "assertion:csaf-specification-binding"
+  ],
+  "CSR-002": [
+    "shared:extension-null",
+    "shared:empty-channels",
+    "shared:channels-wrong-type",
+    "shared:extra-extension-member",
+    "shared:missing-specification",
+    "shared:extra-channel-member",
+    "shared:uri-wrong-type",
+    "assertion:csaf-declaration-shape"
+  ],
+  "CSR-003": [
+    "shared:valid-mailto",
+    "shared:escaped-uri-matches-after-json-decoding",
+    "shared:unlisted-contact",
+    "shared:contact-case-not-normalized",
+    "shared:contact-slash-not-normalized",
+    "shared:duplicate-channel",
+    "shared:tel-is-not-a-csaf-channel",
+    "assertion:csaf-exact-contact-references"
+  ],
+  "CSR-004": [
+    "shared:contact-order-prevails",
+    "assertion:csaf-contact-preference-order"
+  ],
+  "CSR-005": [
+    "shared:relative-specification",
+    "shared:specification-with-space",
+    "shared:unknown-specification",
+    "supplementary:all-rfc3986-uri-edge-cases",
+    "assertion:csaf-absolute-uri-support"
+  ],
+  "CSR-006": [
+    "csaf-reporting:no-fetch",
+    "assertion:csaf-no-uri-fetch"
+  ],
+  "CSR-007": [
+    "shared:invalid-wins-over-unsupported",
+    "shared:mixed-known-and-unknown-is-atomic",
+    "shared:mixed-valid-and-invalid-is-atomic",
+    "assertion:csaf-assessment-priority-and-atomicity"
+  ],
+  "CSR-008": [
+    "shared:critical-use-remains-unsupported",
+    "shared:critical-invalid-metadata-keeps-domains-separate",
+    "shared:expiry-before-critical-permission-step",
+    "assertion:csaf-critical-use-rejected"
+  ],
+  "CSR-009": [
+    "shared:critical-invalid-metadata-keeps-domains-separate",
+    "shared:duplicate-json-member-is-global-error",
+    "assertion:csaf-metadata-permission-separation"
+  ],
+  "CSR-010": [
+    "shared:report-only-still-advertises",
+    "shared:no-authority-is-not-a-current-host-statement",
+    "shared:expired-security-txt-blocks-host-use",
+    "shared:expired-policy-keeps-local-metadata-separate",
+    "shared:testing-target-does-not-gate-reporting-capability",
+    "assertion:csaf-current-host-gates"
+  ],
+  "CSR-011": [
+    "assertion:csaf-no-processing-claim"
+  ],
+  "CSR-012": [
+    "assertion:csaf-no-intake-protocol"
+  ],
+  "CSR-013": [
+    "assertion:csaf-human-reports-remain-accepted"
+  ],
+  "CSR-014": [
+    "assertion:csaf-no-inferred-identities-or-impact"
+  ]
+}

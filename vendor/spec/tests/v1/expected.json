@@ -1,0 +1,336 @@
+{
+  "version-string.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "DOC-001",
+      "DOC-017"
+    ]
+  },
+  "version-0.2.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "DOC-001",
+      "DOC-017"
+    ]
+  },
+  "version-unknown-integer.json": {
+    "status": "unsupported-policy",
+    "layer": "schema",
+    "requirements": [
+      "DOC-017"
+    ]
+  },
+  "version-missing.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "DOC-017"
+    ]
+  },
+  "required-missing.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "DOC-008"
+    ]
+  },
+  "unknown-top-level.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "DOC-007"
+    ]
+  },
+  "unknown-condition.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "COND-001"
+    ]
+  },
+  "prohibited-with-conditions.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "TEST-008"
+    ]
+  },
+  "timestamp-invalid.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "DOC-003"
+    ]
+  },
+  "time-order.json": {
+    "status": "invalid-policy",
+    "layer": "semantic",
+    "requirements": [
+      "DOC-009"
+    ]
+  },
+  "expired.json": {
+    "status": "invalid-policy",
+    "layer": "semantic",
+    "requirements": [
+      "DOC-010"
+    ]
+  },
+  "contact-empty.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "DOC-013"
+    ]
+  },
+  "contact-duplicate.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "DOC-013"
+    ]
+  },
+  "language-invalid.json": {
+    "status": "invalid-policy",
+    "layer": "semantic",
+    "requirements": [
+      "DOC-015"
+    ]
+  },
+  "http-web-contact.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "DOC-013"
+    ]
+  },
+  "contact-relative.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "DOC-013"
+    ]
+  },
+  "contact-mixed-invalid.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "DOC-013"
+    ]
+  },
+  "contact-https-userinfo.json": {
+    "status": "invalid-policy",
+    "layer": "semantic",
+    "requirements": [
+      "DOC-014"
+    ]
+  },
+  "contact-https-fragment.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "DOC-014"
+    ]
+  },
+  "organization-userinfo.json": {
+    "status": "invalid-policy",
+    "layer": "semantic",
+    "requirements": [
+      "DOC-012"
+    ]
+  },
+  "extension-id-relative.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "EXT-001"
+    ]
+  },
+  "critical-extension-missing.json": {
+    "status": "invalid-policy",
+    "layer": "semantic",
+    "requirements": [
+      "EXT-001"
+    ]
+  },
+  "critical-extension-duplicate.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "EXT-001"
+    ]
+  },
+  "scope-wildcard.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "SCOP-002"
+    ]
+  },
+  "scope-host-scheme.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "SCOP-002"
+    ]
+  },
+  "scope-host-port.json": {
+    "status": "invalid-policy",
+    "layer": "semantic",
+    "requirements": [
+      "SCOP-002"
+    ]
+  },
+  "scope-ip-subdomains.json": {
+    "status": "invalid-policy",
+    "layer": "semantic",
+    "requirements": [
+      "SCOP-004"
+    ]
+  },
+  "scope-id-duplicate.json": {
+    "status": "invalid-policy",
+    "layer": "semantic",
+    "requirements": [
+      "SCOP-001"
+    ]
+  },
+  "scope-id-syntax.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "DOC-018"
+    ]
+  },
+  "scope-path-percent-invalid.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "SCOP-010"
+    ]
+  },
+  "product-identifier-relative.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "DOC-018",
+      "SCOP-009"
+    ]
+  },
+  "target-reference-case-mismatch.json": {
+    "status": "invalid-policy",
+    "layer": "semantic",
+    "requirements": [
+      "DOC-018",
+      "TEST-006"
+    ]
+  },
+  "rule-id-duplicate.json": {
+    "status": "invalid-policy",
+    "layer": "semantic",
+    "requirements": [
+      "SCOP-001"
+    ]
+  },
+  "target-reference-unknown.json": {
+    "status": "invalid-policy",
+    "layer": "semantic",
+    "requirements": [
+      "TEST-006"
+    ]
+  },
+  "target-reference-out.json": {
+    "status": "invalid-policy",
+    "layer": "semantic",
+    "requirements": [
+      "TEST-006"
+    ]
+  },
+  "target-reference-product.json": {
+    "status": "invalid-policy",
+    "layer": "semantic",
+    "requirements": [
+      "SCOP-009",
+      "TEST-006"
+    ]
+  },
+  "posture-conflict-report-only.json": {
+    "status": "invalid-policy",
+    "layer": "semantic",
+    "requirements": [
+      "TEST-002"
+    ]
+  },
+  "permitted-target-missing.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "TEST-004"
+    ]
+  },
+  "state-allowed.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "TEST-003"
+    ]
+  },
+  "testing-default.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "DOC-008"
+    ]
+  },
+  "explicit-order.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "SCOP-008"
+    ]
+  },
+  "automated-rate-missing.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "COND-002"
+    ]
+  },
+  "automated-concurrency-missing.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "COND-002"
+    ]
+  },
+  "credential-test-accounts-missing.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "COND-003"
+    ]
+  },
+  "credential-test-accounts-false.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "COND-003"
+    ]
+  },
+  "activity-typo.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "TEST-003"
+    ]
+  },
+  "activity-relative-extension.json": {
+    "status": "invalid-policy",
+    "layer": "schema",
+    "requirements": [
+      "TEST-003"
+    ]
+  }
+}

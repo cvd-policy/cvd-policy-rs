@@ -1,0 +1,31 @@
+[package]
+name = "cvd-policy"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.88"
+license = "Apache-2.0"
+description = "Deterministic Rust library for validating and evaluating CVD Policy documents."
+readme = "README.md"
+
+[lib]
+name = "cvd_policy"
+path = "src/lib.rs"
+
+[dependencies]
+fluent-uri = "0.4.1"
+language-tags = "0.3.2"
+num-bigint = "0.5.1"
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1.0.154", features = ["arbitrary_precision"] }
+time = { version = "0.3.55", default-features = false, features = ["std", "parsing", "formatting"] }
+url = "2.5.8"
+
+[dev-dependencies]
+sha2 = "0.10"
+
+[lints.rust]
+missing_debug_implementations = "warn"
+unsafe_code = "forbid"
+
+[lints.clippy]
+all = "warn"

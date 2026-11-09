@@ -1,0 +1,444 @@
+{
+  "AUTH-001": [
+    "evaluation:authority-missing",
+    "security-txt:valid-exact"
+  ],
+  "AUTH-002": [
+    "security-txt:cross-host-redirect-canonical",
+    "security-txt:same-host-redirect",
+    "security-txt:valid-case-insensitive-external"
+  ],
+  "AUTH-003": [
+    "evaluation:authority-subdomain-mismatch"
+  ],
+  "AUTH-004": [
+    "evaluation:authority-parent-mismatch",
+    "evaluation:authority-subdomain-mismatch"
+  ],
+  "AUTH-005": [
+    "evaluation:policy-representation-uri-mismatch",
+    "evaluation:policy-retrieval-redirect"
+  ],
+  "COND-001": [
+    "policy-invalid:unknown-condition.json"
+  ],
+  "COND-002": [
+    "policy-invalid:automated-concurrency-missing.json",
+    "policy-invalid:automated-rate-missing.json",
+    "policy-valid:limited-web-testing.json"
+  ],
+  "COND-003": [
+    "evaluation:credential-test-accounts-confirmed",
+    "evaluation:credential-test-accounts-unconfirmed",
+    "policy-invalid:credential-test-accounts-false.json",
+    "policy-invalid:credential-test-accounts-missing.json"
+  ],
+  "COND-004": [
+    "evaluation:conditions-concurrency-exceeded",
+    "evaluation:conditions-concurrency-missing",
+    "evaluation:conditions-rate-exceeded",
+    "evaluation:conditions-rate-missing",
+    "evaluation:conditions-user-agent-missing",
+    "evaluation:conditions-user-agent-token-missing",
+    "evaluation:credential-test-accounts-unconfirmed",
+    "evaluation:multiple-permits-none-satisfied"
+  ],
+  "CSR-001": [
+    "assertion:csaf-specification-binding",
+    "shared:latest-specification-not-pinned",
+    "shared:specification-case-not-normalized",
+    "shared:unknown-specification",
+    "shared:valid-mailto"
+  ],
+  "CSR-002": [
+    "assertion:csaf-declaration-shape",
+    "shared:channels-wrong-type",
+    "shared:empty-channels",
+    "shared:extension-null",
+    "shared:extra-channel-member",
+    "shared:extra-extension-member",
+    "shared:missing-specification",
+    "shared:uri-wrong-type"
+  ],
+  "CSR-003": [
+    "assertion:csaf-exact-contact-references",
+    "shared:contact-case-not-normalized",
+    "shared:contact-slash-not-normalized",
+    "shared:duplicate-channel",
+    "shared:escaped-uri-matches-after-json-decoding",
+    "shared:tel-is-not-a-csaf-channel",
+    "shared:unlisted-contact",
+    "shared:valid-mailto"
+  ],
+  "CSR-004": [
+    "assertion:csaf-contact-preference-order",
+    "shared:contact-order-prevails"
+  ],
+  "CSR-005": [
+    "assertion:csaf-absolute-uri-support",
+    "csaf-reporting-extra:absolute-uri-double-at-in-userinfo-is-invalid",
+    "csaf-reporting-extra:absolute-uri-empty-authority-and-path",
+    "csaf-reporting-extra:absolute-uri-empty-authority-with-path",
+    "csaf-reporting-extra:absolute-uri-empty-path",
+    "csaf-reporting-extra:absolute-uri-empty-path-with-query",
+    "csaf-reporting-extra:absolute-uri-empty-port-is-valid",
+    "csaf-reporting-extra:absolute-uri-fragment-is-invalid",
+    "csaf-reporting-extra:absolute-uri-ip-literal-authority",
+    "csaf-reporting-extra:absolute-uri-nonnumeric-port-is-invalid",
+    "csaf-reporting-extra:absolute-uri-port-above-65535-is-valid",
+    "csaf-reporting-extra:absolute-uri-rootless-path",
+    "csaf-reporting-extra:brackets-in-path-are-invalid-ipv6-looking",
+    "csaf-reporting-extra:brackets-in-path-are-invalid-ipvfuture-looking",
+    "csaf-reporting-extra:brackets-in-path-are-invalid-userinfo-looking",
+    "csaf-reporting-extra:https-uri-fragment-is-invalid",
+    "csaf-reporting-extra:percent-encoded-number-sign-is-not-a-fragment",
+    "csaf-reporting-extra:raw-double-quote-is-invalid",
+    "shared:relative-specification",
+    "shared:specification-with-space",
+    "shared:unknown-specification",
+    "supplementary:all-rfc3986-uri-edge-cases"
+  ],
+  "CSR-006": [
+    "assertion:csaf-no-uri-fetch",
+    "csaf-reporting:no-fetch"
+  ],
+  "CSR-007": [
+    "assertion:csaf-assessment-priority-and-atomicity",
+    "shared:invalid-wins-over-unsupported",
+    "shared:mixed-known-and-unknown-is-atomic",
+    "shared:mixed-valid-and-invalid-is-atomic"
+  ],
+  "CSR-008": [
+    "assertion:csaf-critical-use-rejected",
+    "shared:critical-invalid-metadata-keeps-domains-separate",
+    "shared:critical-use-remains-unsupported",
+    "shared:expiry-before-critical-permission-step"
+  ],
+  "CSR-009": [
+    "assertion:csaf-metadata-permission-separation",
+    "shared:critical-invalid-metadata-keeps-domains-separate",
+    "shared:duplicate-json-member-is-global-error"
+  ],
+  "CSR-010": [
+    "assertion:csaf-current-host-gates",
+    "shared:expired-policy-keeps-local-metadata-separate",
+    "shared:expired-security-txt-blocks-host-use",
+    "shared:no-authority-is-not-a-current-host-statement",
+    "shared:report-only-still-advertises",
+    "shared:testing-target-does-not-gate-reporting-capability"
+  ],
+  "CSR-011": [
+    "assertion:csaf-no-processing-claim"
+  ],
+  "CSR-012": [
+    "assertion:csaf-no-intake-protocol"
+  ],
+  "CSR-013": [
+    "assertion:csaf-human-reports-remain-accepted"
+  ],
+  "CSR-014": [
+    "assertion:csaf-no-inferred-identities-or-impact"
+  ],
+  "DISC-001": [
+    "security-txt:fragment-uri",
+    "security-txt:http-uri",
+    "security-txt:relative-uri",
+    "security-txt:userinfo-uri",
+    "security-txt:valid-exact"
+  ],
+  "DISC-002": [
+    "security-txt:duplicate-field",
+    "security-txt:valid-case-insensitive-external"
+  ],
+  "DISC-003": [
+    "security-txt:missing-field"
+  ],
+  "DISC-004": [
+    "security-txt:contact-invalid",
+    "security-txt:contact-missing",
+    "security-txt:expired",
+    "security-txt:expires-duplicate",
+    "security-txt:expires-invalid",
+    "security-txt:expires-missing",
+    "security-txt:valid-exact"
+  ],
+  "DISC-005": [
+    "security-txt:cross-host-redirect-canonical",
+    "security-txt:same-host-redirect"
+  ],
+  "DISC-006": [
+    "security-txt:cross-host-redirect-canonical",
+    "security-txt:cross-host-redirect-mismatch"
+  ],
+  "DISC-007": [
+    "assertion:signed-file-no-rewrite"
+  ],
+  "DISC-008": [
+    "security-txt:canonical-mismatch-no-redirect",
+    "security-txt:same-host-redirect-canonical-mismatch"
+  ],
+  "DOC-001": [
+    "policy-invalid:version-0.2.json",
+    "policy-invalid:version-string.json"
+  ],
+  "DOC-002": [
+    "assertion:format-package-separation"
+  ],
+  "DOC-003": [
+    "policy-invalid:timestamp-invalid.json",
+    "policy-raw:comment.raw.json",
+    "policy-raw:duplicate-condition.raw.json",
+    "policy-raw:duplicate-expires.raw.json",
+    "policy-raw:duplicate-state.raw.json",
+    "policy-raw:duplicate-top-level.raw.json",
+    "policy-raw:multiple-documents.raw.json",
+    "policy-raw:non-json-number.raw.json",
+    "policy-raw:trailing-comma.raw.json"
+  ],
+  "DOC-004": [
+    "policy-raw:comment.raw.json",
+    "policy-raw:duplicate-condition.raw.json",
+    "policy-raw:duplicate-expires.raw.json",
+    "policy-raw:duplicate-state.raw.json",
+    "policy-raw:duplicate-top-level.raw.json",
+    "policy-raw:multiple-documents.raw.json",
+    "policy-raw:non-json-number.raw.json",
+    "policy-raw:trailing-comma.raw.json"
+  ],
+  "DOC-005": [
+    "policy-raw:comment.raw.json",
+    "policy-raw:duplicate-condition.raw.json",
+    "policy-raw:duplicate-expires.raw.json",
+    "policy-raw:duplicate-state.raw.json",
+    "policy-raw:duplicate-top-level.raw.json",
+    "policy-raw:multiple-documents.raw.json",
+    "policy-raw:non-json-number.raw.json",
+    "policy-raw:trailing-comma.raw.json"
+  ],
+  "DOC-006": [
+    "assertion:schema-no-defaults"
+  ],
+  "DOC-007": [
+    "assertion:strict-core-objects",
+    "policy-invalid:unknown-top-level.json"
+  ],
+  "DOC-008": [
+    "policy-invalid:required-missing.json",
+    "policy-invalid:testing-default.json",
+    "policy-valid:minimal-report-only.json"
+  ],
+  "DOC-009": [
+    "policy-invalid:time-order.json"
+  ],
+  "DOC-010": [
+    "evaluation:policy-expired",
+    "policy-invalid:expired.json"
+  ],
+  "DOC-011": [
+    "policy-valid:minimal-report-only.json"
+  ],
+  "DOC-012": [
+    "policy-invalid:organization-userinfo.json"
+  ],
+  "DOC-013": [
+    "policy-invalid:contact-duplicate.json",
+    "policy-invalid:contact-empty.json",
+    "policy-invalid:contact-mixed-invalid.json",
+    "policy-invalid:contact-relative.json",
+    "policy-invalid:http-web-contact.json"
+  ],
+  "DOC-014": [
+    "policy-invalid:contact-https-fragment.json",
+    "policy-invalid:contact-https-userinfo.json"
+  ],
+  "DOC-015": [
+    "policy-invalid:language-invalid.json"
+  ],
+  "DOC-016": [
+    "policy-valid:limited-web-testing.json"
+  ],
+  "DOC-017": [
+    "assertion:version-dispatch",
+    "policy-invalid:version-0.2.json",
+    "policy-invalid:version-missing.json",
+    "policy-invalid:version-string.json",
+    "policy-invalid:version-unknown-integer.json"
+  ],
+  "DOC-018": [
+    "assertion:identifier-comparison",
+    "policy-invalid:product-identifier-relative.json",
+    "policy-invalid:scope-id-syntax.json",
+    "policy-invalid:target-reference-case-mismatch.json"
+  ],
+  "DOC-019": [
+    "assertion:object-member-table"
+  ],
+  "ERR-001": [
+    "assertion:machine-readable-errors",
+    "evaluation:target-product-identifier",
+    "evaluation:target-relative",
+    "evaluation:target-unsupported-scheme",
+    "evaluation:target-userinfo"
+  ],
+  "ERR-002": [
+    "assertion:input-failure-boundary",
+    "evaluation:target-invalid-percent",
+    "evaluation:target-relative"
+  ],
+  "EVAL-001": [
+    "assertion:result-not-boolean"
+  ],
+  "EVAL-002": [
+    "assertion:nonpositive-fail-closed"
+  ],
+  "EVAL-003": [
+    "assertion:evaluation-order",
+    "evaluation:posture-report-only-no-matching-rule",
+    "evaluation:target-product-identifier",
+    "evaluation:target-relative",
+    "evaluation:target-unsupported-scheme",
+    "evaluation:target-userinfo"
+  ],
+  "EVAL-004": [
+    "evaluation:multiple-permits-one-satisfied",
+    "evaluation:permitted",
+    "policy-valid:limited-web-testing.json"
+  ],
+  "EVAL-005": [
+    "evaluation:multiple-permits-one-satisfied",
+    "evaluation:multiple-permits-one-satisfied-reversed"
+  ],
+  "EXT-001": [
+    "policy-invalid:critical-extension-duplicate.json",
+    "policy-invalid:critical-extension-missing.json",
+    "policy-invalid:extension-id-relative.json"
+  ],
+  "EXT-002": [
+    "evaluation:critical-extension-unsupported",
+    "evaluation:extension-activity-unsupported"
+  ],
+  "EXT-003": [
+    "evaluation:noncritical-extension-ignored"
+  ],
+  "EXT-004": [
+    "assertion:critical-permission-extensions"
+  ],
+  "FETCH-001": [
+    "assertion:media-type-policy",
+    "evaluation:policy-retrieval-application-json-compat",
+    "evaluation:policy-retrieval-application-json-rejected"
+  ],
+  "FETCH-002": [
+    "assertion:retrieval-method-and-credentials",
+    "evaluation:policy-retrieval-204",
+    "evaluation:policy-retrieval-206",
+    "evaluation:policy-retrieval-application-json-compat",
+    "evaluation:policy-retrieval-application-json-rejected",
+    "evaluation:policy-retrieval-redirect"
+  ],
+  "PRIV-001": [
+    "assertion:privacy-no-transmission"
+  ],
+  "REP-001": [
+    "policy-valid:empty-requested-fields.json"
+  ],
+  "REP-002": [
+    "assertion:report-request-safety",
+    "policy-valid:limited-web-testing.json",
+    "policy-valid:product-reporting.json"
+  ],
+  "SCOP-001": [
+    "policy-invalid:rule-id-duplicate.json",
+    "policy-invalid:scope-id-duplicate.json"
+  ],
+  "SCOP-002": [
+    "policy-invalid:scope-host-port.json",
+    "policy-invalid:scope-host-scheme.json",
+    "policy-invalid:scope-wildcard.json"
+  ],
+  "SCOP-003": [
+    "evaluation:dns-case-trailing-dot",
+    "evaluation:idna-a-label"
+  ],
+  "SCOP-004": [
+    "evaluation:ipv4",
+    "evaluation:ipv6",
+    "policy-invalid:scope-ip-subdomains.json"
+  ],
+  "SCOP-005": [
+    "evaluation:alternate-port-covered",
+    "evaluation:alternate-port-not-covered"
+  ],
+  "SCOP-006": [
+    "evaluation:scope-path-boundary",
+    "evaluation:scope-query-fragment-ignored"
+  ],
+  "SCOP-007": [
+    "evaluation:scope-out-wins",
+    "evaluation:scope-out-wins-reversed"
+  ],
+  "SCOP-008": [
+    "evaluation:multiple-permits-one-satisfied",
+    "evaluation:multiple-permits-one-satisfied-reversed",
+    "evaluation:scope-out-wins",
+    "evaluation:scope-out-wins-reversed",
+    "policy-invalid:explicit-order.json"
+  ],
+  "SCOP-009": [
+    "evaluation:target-product-identifier",
+    "policy-invalid:product-identifier-relative.json",
+    "policy-invalid:target-reference-product.json",
+    "policy-valid:minimal-report-only.json",
+    "policy-valid:product-reporting.json"
+  ],
+  "SCOP-010": [
+    "evaluation:path-empty-is-root",
+    "evaluation:path-encoded-slash-distinct",
+    "evaluation:path-percent-hex-normalized",
+    "evaluation:path-percent-not-decoded",
+    "evaluation:path-repeated-slashes-distinct",
+    "evaluation:path-repeated-slashes-preserved",
+    "evaluation:path-scope-dot-segments",
+    "evaluation:path-target-dot-segments",
+    "evaluation:target-invalid-percent",
+    "policy-invalid:scope-path-percent-invalid.json"
+  ],
+  "SEC-001": [
+    "assertion:security-fail-closed"
+  ],
+  "TEST-001": [
+    "evaluation:open-without-matching-rule",
+    "evaluation:rule-missing"
+  ],
+  "TEST-002": [
+    "evaluation:posture-report-only",
+    "policy-invalid:posture-conflict-report-only.json"
+  ],
+  "TEST-003": [
+    "evaluation:extension-activity-understood",
+    "evaluation:extension-activity-unsupported",
+    "policy-invalid:activity-relative-extension.json",
+    "policy-invalid:activity-typo.json",
+    "policy-invalid:state-allowed.json"
+  ],
+  "TEST-004": [
+    "policy-invalid:permitted-target-missing.json",
+    "policy-valid:limited-web-testing.json"
+  ],
+  "TEST-005": [
+    "evaluation:rule-prohibited-global"
+  ],
+  "TEST-006": [
+    "policy-invalid:target-reference-case-mismatch.json",
+    "policy-invalid:target-reference-out.json",
+    "policy-invalid:target-reference-product.json",
+    "policy-invalid:target-reference-unknown.json"
+  ],
+  "TEST-007": [
+    "evaluation:rule-prohibited",
+    "evaluation:rule-prohibited-global"
+  ],
+  "TEST-008": [
+    "policy-invalid:prohibited-with-conditions.json"
+  ]
+}

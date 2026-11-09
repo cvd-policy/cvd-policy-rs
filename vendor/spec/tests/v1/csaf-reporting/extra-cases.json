@@ -1,0 +1,107 @@
+{
+  "artifact_status": "Supplementary RFC 3986 URI edge cases; these do not modify the shared 42-case artifact.",
+  "cases": [
+    {
+      "id": "absolute-uri-empty-path",
+      "specification": "foo:",
+      "expected": "unsupported",
+      "requirements": ["CSR-005"]
+    },
+    {
+      "id": "absolute-uri-empty-path-with-query",
+      "specification": "foo:?x",
+      "expected": "unsupported",
+      "requirements": ["CSR-005"]
+    },
+    {
+      "id": "absolute-uri-fragment-is-invalid",
+      "specification": "foo:#x",
+      "expected": "invalid",
+      "requirements": ["CSR-005"]
+    },
+    {
+      "id": "https-uri-fragment-is-invalid",
+      "specification": "https://other.example/spec#v1",
+      "expected": "invalid",
+      "requirements": ["CSR-005"]
+    },
+    {
+      "id": "percent-encoded-number-sign-is-not-a-fragment",
+      "specification": "https://other.example/spec%23v1",
+      "expected": "unsupported",
+      "requirements": ["CSR-005"]
+    },
+    {
+      "id": "raw-double-quote-is-invalid",
+      "specification": "https://bad.example/\"",
+      "expected": "invalid",
+      "requirements": ["CSR-005"]
+    },
+    {
+      "id": "brackets-in-path-are-invalid-ipv6-looking",
+      "specification": "foo:/[::1]",
+      "expected": "invalid",
+      "requirements": ["CSR-005"]
+    },
+    {
+      "id": "brackets-in-path-are-invalid-userinfo-looking",
+      "specification": "foo:/user@[::1]",
+      "expected": "invalid",
+      "requirements": ["CSR-005"]
+    },
+    {
+      "id": "brackets-in-path-are-invalid-ipvfuture-looking",
+      "specification": "foo:/[v1.host]",
+      "expected": "invalid",
+      "requirements": ["CSR-005"]
+    },
+    {
+      "id": "absolute-uri-rootless-path",
+      "specification": "foo:/path",
+      "expected": "unsupported",
+      "requirements": ["CSR-005"]
+    },
+    {
+      "id": "absolute-uri-ip-literal-authority",
+      "specification": "foo://[::1]/",
+      "expected": "unsupported",
+      "requirements": ["CSR-005"]
+    },
+    {
+      "id": "absolute-uri-empty-authority-with-path",
+      "specification": "foo:///path",
+      "expected": "unsupported",
+      "requirements": ["CSR-005"]
+    },
+    {
+      "id": "absolute-uri-empty-authority-and-path",
+      "specification": "foo://",
+      "expected": "unsupported",
+      "requirements": ["CSR-005"]
+    },
+    {
+      "id": "absolute-uri-double-at-in-userinfo-is-invalid",
+      "specification": "foo://user@@h/x",
+      "expected": "invalid",
+      "requirements": ["CSR-005"]
+    },
+    {
+      "id": "absolute-uri-nonnumeric-port-is-invalid",
+      "specification": "foo://h:abc/x",
+      "expected": "invalid",
+      "requirements": ["CSR-005"]
+    },
+    {
+      "id": "absolute-uri-empty-port-is-valid",
+      "specification": "foo://h:/x",
+      "expected": "unsupported",
+      "requirements": ["CSR-005"]
+    },
+    {
+      "id": "absolute-uri-port-above-65535-is-valid",
+      "specification": "foo://h:99999/x",
+      "expected": "unsupported",
+      "requirements": ["CSR-005"]
+    }
+  ]
+}

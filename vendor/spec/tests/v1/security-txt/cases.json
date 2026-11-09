@@ -1,0 +1,328 @@
+[
+  {
+    "id": "valid-exact",
+    "text": "Contact: mailto:security@example.com\nCVD-Policy: https://example.com/cvd-policy.json\nExpires: 2027-02-28T08:00:00Z\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/.well-known/security.txt",
+      "redirectChain": [],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": true,
+      "discoveryHost": "example.com",
+      "cvdPolicyUri": "https://example.com/cvd-policy.json"
+    },
+    "requirements": [
+      "DISC-001",
+      "DISC-004",
+      "AUTH-001"
+    ]
+  },
+  {
+    "id": "valid-case-insensitive-external",
+    "text": "contact: mailto:security@example.com\ncvd-policy: https://policies.provider.example/example.json\nexpires: 2027-02-28T08:00:00Z\nPolicy: https://example.com/human\nPolicy: https://example.com/other\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/.well-known/security.txt",
+      "redirectChain": [],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": true,
+      "discoveryHost": "example.com",
+      "cvdPolicyUri": "https://policies.provider.example/example.json"
+    },
+    "requirements": [
+      "DISC-002",
+      "AUTH-002"
+    ]
+  },
+  {
+    "id": "missing-field",
+    "text": "Contact: mailto:security@example.com\nExpires: 2027-02-28T08:00:00Z\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/.well-known/security.txt",
+      "redirectChain": [],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": false
+    },
+    "requirements": [
+      "DISC-003"
+    ]
+  },
+  {
+    "id": "duplicate-field",
+    "text": "Contact: mailto:security@example.com\nCVD-Policy: https://example.com/a.json\nCVD-Policy: https://example.com/b.json\nExpires: 2027-02-28T08:00:00Z\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/.well-known/security.txt",
+      "redirectChain": [],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": false
+    },
+    "requirements": [
+      "DISC-002"
+    ]
+  },
+  {
+    "id": "relative-uri",
+    "text": "Contact: mailto:security@example.com\nCVD-Policy: /policy.json\nExpires: 2027-02-28T08:00:00Z\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/.well-known/security.txt",
+      "redirectChain": [],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": false
+    },
+    "requirements": [
+      "DISC-001"
+    ]
+  },
+  {
+    "id": "http-uri",
+    "text": "Contact: mailto:security@example.com\nCVD-Policy: http://example.com/policy.json\nExpires: 2027-02-28T08:00:00Z\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/.well-known/security.txt",
+      "redirectChain": [],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": false
+    },
+    "requirements": [
+      "DISC-001"
+    ]
+  },
+  {
+    "id": "userinfo-uri",
+    "text": "Contact: mailto:security@example.com\nCVD-Policy: https://user@example.com/policy.json\nExpires: 2027-02-28T08:00:00Z\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/.well-known/security.txt",
+      "redirectChain": [],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": false
+    },
+    "requirements": [
+      "DISC-001"
+    ]
+  },
+  {
+    "id": "fragment-uri",
+    "text": "Contact: mailto:security@example.com\nCVD-Policy: https://example.com/policy.json#part\nExpires: 2027-02-28T08:00:00Z\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/.well-known/security.txt",
+      "redirectChain": [],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": false
+    },
+    "requirements": [
+      "DISC-001"
+    ]
+  },
+  {
+    "id": "expired",
+    "text": "Contact: mailto:security@example.com\nCVD-Policy: https://example.com/policy.json\nExpires: 2026-08-29T09:00:00Z\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/.well-known/security.txt",
+      "redirectChain": [],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": false
+    },
+    "requirements": [
+      "DISC-004"
+    ]
+  },
+  {
+    "id": "contact-missing",
+    "text": "CVD-Policy: https://example.com/policy.json\nExpires: 2027-02-28T08:00:00Z\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/.well-known/security.txt",
+      "redirectChain": [],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": false
+    },
+    "requirements": [
+      "DISC-004"
+    ]
+  },
+  {
+    "id": "contact-invalid",
+    "text": "Contact: not-a-uri\nCVD-Policy: https://example.com/policy.json\nExpires: 2027-02-28T08:00:00Z\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/.well-known/security.txt",
+      "redirectChain": [],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": false
+    },
+    "requirements": [
+      "DISC-004"
+    ]
+  },
+  {
+    "id": "expires-missing",
+    "text": "Contact: mailto:security@example.com\nCVD-Policy: https://example.com/policy.json\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/.well-known/security.txt",
+      "redirectChain": [],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": false
+    },
+    "requirements": [
+      "DISC-004"
+    ]
+  },
+  {
+    "id": "expires-duplicate",
+    "text": "Contact: mailto:security@example.com\nCVD-Policy: https://example.com/policy.json\nExpires: 2027-02-28T08:00:00Z\nExpires: 2027-03-01T08:00:00Z\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/.well-known/security.txt",
+      "redirectChain": [],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": false
+    },
+    "requirements": [
+      "DISC-004"
+    ]
+  },
+  {
+    "id": "expires-invalid",
+    "text": "Contact: mailto:security@example.com\nCVD-Policy: https://example.com/policy.json\nExpires: not-a-timestamp\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/.well-known/security.txt",
+      "redirectChain": [],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": false
+    },
+    "requirements": [
+      "DISC-004"
+    ]
+  },
+  {
+    "id": "same-host-redirect",
+    "text": "Contact: mailto:security@example.com\nCVD-Policy: https://example.com/policy.json\nExpires: 2027-02-28T08:00:00Z\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/security.txt",
+      "redirectChain": [
+        "https://example.com/security.txt"
+      ],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": true,
+      "discoveryHost": "example.com",
+      "cvdPolicyUri": "https://example.com/policy.json"
+    },
+    "requirements": [
+      "DISC-005",
+      "AUTH-002"
+    ]
+  },
+  {
+    "id": "canonical-mismatch-no-redirect",
+    "text": "Contact: mailto:security@example.com\nCVD-Policy: https://example.com/policy.json\nExpires: 2027-02-28T08:00:00Z\nCanonical: https://example.com/security.txt\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/.well-known/security.txt",
+      "redirectChain": [],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": false
+    },
+    "requirements": [
+      "DISC-008"
+    ]
+  },
+  {
+    "id": "same-host-redirect-canonical-mismatch",
+    "text": "Contact: mailto:security@example.com\nCVD-Policy: https://example.com/policy.json\nExpires: 2027-02-28T08:00:00Z\nCanonical: https://example.com/security.txt\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://example.com/security.txt",
+      "redirectChain": [
+        "https://example.com/security.txt"
+      ],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": false
+    },
+    "requirements": [
+      "DISC-008"
+    ]
+  },
+  {
+    "id": "cross-host-redirect-canonical",
+    "text": "Contact: mailto:security@example.com\nCVD-Policy: https://provider.example/policy.json\nExpires: 2027-02-28T08:00:00Z\nCanonical: https://example.com/.well-known/security.txt\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://security.provider.example/file.txt",
+      "redirectChain": [
+        "https://security.provider.example/file.txt"
+      ],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": true,
+      "discoveryHost": "example.com",
+      "cvdPolicyUri": "https://provider.example/policy.json"
+    },
+    "requirements": [
+      "DISC-005",
+      "DISC-006",
+      "AUTH-002"
+    ]
+  },
+  {
+    "id": "cross-host-redirect-mismatch",
+    "text": "Contact: mailto:security@example.com\nCVD-Policy: https://provider.example/policy.json\nExpires: 2027-02-28T08:00:00Z\nCanonical: https://security.provider.example/file.txt\n",
+    "context": {
+      "requestedUri": "https://example.com/.well-known/security.txt",
+      "finalUri": "https://security.provider.example/file.txt",
+      "redirectChain": [
+        "https://security.provider.example/file.txt"
+      ],
+      "retrievedAt": "2026-08-29T10:00:00Z"
+    },
+    "expected": {
+      "established": false
+    },
+    "requirements": [
+      "DISC-006"
+    ]
+  }
+]

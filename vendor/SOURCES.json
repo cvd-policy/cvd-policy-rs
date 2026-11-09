@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "name": "cvd-policy-spec",
+      "commit": "955f01c67391c832c970661329c7da5fdbf011af",
+      "license": "CC0-1.0",
+      "license_file": "vendor/spec/LICENSE",
+      "source_paths": [
+        "v1/",
+        "schema/cvd-policy-1.schema.json",
+        "tests/v1/",
+        "examples/v1/",
+        "extensions/csaf-vulnerability-report-v1/",
+        "draft/draft-behring-cvd-policy.md",
+        "draft/REQUIREMENTS-MAPPING.md"
+      ],
+      "vendored_path": "vendor/spec/"
+    },
+    {
+      "name": "cvd-policy-web-core-reference-license",
+      "commit": "2e63a73ac1a04d31fc9fca8dec6cc256ccf963b4",
+      "license": "Apache-2.0",
+      "license_file": "vendor/web-core/LICENSE",
+      "source_path": "packages/core/LICENSE",
+      "vendored_path": "vendor/web-core/LICENSE"
+    }
+  ]
+}

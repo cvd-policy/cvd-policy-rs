@@ -1,0 +1,29 @@
+{
+  "cvd_policy": 1,
+  "last_updated": "2026-08-29T08:00:00Z",
+  "expires": "2027-02-28T08:00:00Z",
+  "organization": {
+    "name": "Example Organization"
+  },
+  "contact": {
+    "channels": [
+      "tel:+1-201-555-0123"
+    ]
+  },
+  "research": {
+    "posture": "report_only"
+  },
+  "reporting_scope": {
+    "products": [
+      {
+        "id": "product",
+        "state": "in",
+        "name": "Example Product"
+      }
+    ]
+  },
+  "reporting": {
+    "requested_fields": [],
+    "proof_of_exploitation": "prohibited"
+  }
+}

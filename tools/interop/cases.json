@@ -1,0 +1,102 @@
+{
+  "spec_commit": "955f01c67391c832c970661329c7da5fdbf011af",
+  "typescript_commit": "2e63a73ac1a04d31fc9fca8dec6cc256ccf963b4",
+  "base_policy": "vendor/spec/tests/v1/policy/valid/minimal-report-only.json",
+  "now": "2026-11-08T12:00:00Z",
+  "typescript_options": {
+    "checkExpiry": false
+  },
+  "cases": [
+    {
+      "id": "version-integer-one",
+      "edits": [],
+      "typescript": "valid",
+      "normative": "valid"
+    },
+    {
+      "id": "version-decimal-one",
+      "edits": [{"from": "\"cvd_policy\": 1,", "to": "\"cvd_policy\": 1.0,"}],
+      "typescript": "valid",
+      "normative": "valid"
+    },
+    {
+      "id": "version-exponent-one",
+      "edits": [{"from": "\"cvd_policy\": 1,", "to": "\"cvd_policy\": 1e0,"}],
+      "typescript": "valid",
+      "normative": "valid"
+    },
+    {
+      "id": "version-rounded-fraction",
+      "edits": [{"from": "\"cvd_policy\": 1,", "to": "\"cvd_policy\": 1.0000000000000000000001,"}],
+      "typescript": "valid",
+      "normative": "invalid-policy",
+      "difference_reason": "The JSON number is not mathematically integral; ECMAScript Number rounding must not redefine the V1 integer constraint."
+    },
+    {
+      "id": "version-overflow-integer",
+      "edits": [{"from": "\"cvd_policy\": 1,", "to": "\"cvd_policy\": 1e400,"}],
+      "typescript": "invalid-policy",
+      "normative": "unsupported-policy",
+      "difference_reason": "V1 DOC-017 requires an unknown integer version to be unsupported; the exact JSON integer must not be converted to ECMAScript Infinity before version dispatch."
+    },
+    {
+      "id": "version-fraction-1-5",
+      "edits": [{"from": "\"cvd_policy\": 1,", "to": "\"cvd_policy\": 1.5,"}],
+      "typescript": "invalid-policy",
+      "normative": "invalid-policy"
+    },
+    {
+      "id": "version-unknown-negative-one",
+      "edits": [{"from": "\"cvd_policy\": 1,", "to": "\"cvd_policy\": -1,"}],
+      "typescript": "unsupported-policy",
+      "normative": "unsupported-policy"
+    },
+    {
+      "id": "version-unknown-negative-zero",
+      "edits": [{"from": "\"cvd_policy\": 1,", "to": "\"cvd_policy\": -0,"}],
+      "typescript": "unsupported-policy",
+      "normative": "unsupported-policy"
+    },
+    {
+      "id": "version-unknown-large-integer",
+      "edits": [{"from": "\"cvd_policy\": 1,", "to": "\"cvd_policy\": 9007199254740993,"}],
+      "typescript": "unsupported-policy",
+      "normative": "unsupported-policy"
+    },
+    {
+      "id": "organization-uri-fragment",
+      "edits": [{"from": "\"name\": \"Example Organization\"", "to": "\"name\": \"Example Organization\",\n    \"uri\": \"https://example.com/#fragment\""}],
+      "typescript": "valid",
+      "normative": "invalid-policy",
+      "difference_reason": "V1 DOC-012 requires organization.uri to be an absolute HTTPS URI; RFC 3986 §4.3 absolute-URI excludes the fragment component."
+    },
+    {
+      "id": "contact-channel-uri-fragment",
+      "edits": [{"from": "mailto:security@example.com", "to": "mailto:security@example.com#fragment"}],
+      "typescript": "valid",
+      "normative": "invalid-policy",
+      "difference_reason": "V1 DOC-013 requires an absolute URI and RFC 3986 §4.3 absolute-URI excludes the fragment component."
+    },
+    {
+      "id": "contact-encryption-uri-fragment",
+      "edits": [{"from": "    ]\n  },\n  \"research\"", "to": "    ],\n    \"encryption\": [\n      \"https://example.com/key#fragment\"\n    ]\n  },\n  \"research\""}],
+      "typescript": "valid",
+      "normative": "invalid-policy",
+      "difference_reason": "V1 DOC-016 requires encryption references to be absolute URIs; RFC 3986 §4.3 absolute-URI excludes the fragment component."
+    },
+    {
+      "id": "product-identifier-uri-fragment",
+      "edits": [{"from": "    \"web\": [", "to": "    \"products\": [{\"id\":\"product\",\"state\":\"in\",\"name\":\"Widget\",\"identifiers\":[\"urn:example:product#fragment\"]}],\n    \"web\": ["}],
+      "typescript": "valid",
+      "normative": "invalid-policy",
+      "difference_reason": "V1 §Reporting Scope requires product identifiers to be absolute RFC 3986 URIs; RFC 3986 §4.3 absolute-URI excludes the fragment component."
+    },
+    {
+      "id": "extension-identifier-uri-fragment",
+      "edits": [{"from": "\"proof_of_exploitation\": \"not_requested\"\n  }\n}", "to": "\"proof_of_exploitation\": \"not_requested\"\n  },\n  \"extensions\": {\n    \"urn:example:extension#fragment\": {}\n  }\n}"}],
+      "typescript": "valid",
+      "normative": "invalid-policy",
+      "difference_reason": "V1 EXT-001 and §Extensions require extension identifiers to be absolute RFC 3986 URIs; RFC 3986 §4.3 absolute-URI excludes the fragment component."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "minimal-report-only.json": {
+    "requirements": ["DOC-008", "DOC-011", "SCOP-009"]
+  },
+  "limited-web-testing.json": {
+    "requirements": ["DOC-016", "TEST-004", "COND-002", "REP-002", "EVAL-004"]
+  },
+  "product-reporting.json": {
+    "requirements": ["SCOP-009", "REP-002"]
+  },
+  "empty-requested-fields.json": {
+    "requirements": ["REP-001"]
+  }
+}

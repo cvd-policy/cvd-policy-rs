@@ -1,0 +1,49 @@
+{
+  "cvd_policy": 1,
+  "last_updated": "2026-08-29T08:00:00Z",
+  "expires": "2027-02-28T08:00:00Z",
+  "organization": {
+    "name": "Example Organization"
+  },
+  "contact": {
+    "channels": [
+      "mailto:security@example.com"
+    ]
+  },
+  "research": {
+    "posture": "limited"
+  },
+  "reporting_scope": {
+    "web": [
+      {
+        "id": "example",
+        "state": "in",
+        "host": "example.com",
+        "schemes": [
+          "https"
+        ],
+        "path_prefix": "/",
+        "include_subdomains": true
+      }
+    ]
+  },
+  "testing": {
+    "rules": [
+      {
+        "id": "manual",
+        "activity": "manual_testing",
+        "state": "permitted",
+        "target_ids": [
+          "example"
+        ]
+      }
+    ]
+  },
+  "reporting": {
+    "requested_fields": [
+      "affected_asset",
+      "description"
+    ],
+    "proof_of_exploitation": "not_requested"
+  }
+}
