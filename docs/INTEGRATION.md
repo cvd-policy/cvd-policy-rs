@@ -1,6 +1,6 @@
 # Integrationsübergabe
 
-Diese Übergabe beschreibt konkrete Crate-Schnittstellen und Produktverantwortungen. Paketstand `cvd-policy` `0.1.0`, crate root `cvd_policy`; lokaler Crate-Pfad: `/home/undef/Projects/skalvar/cvd/cvd_policy/rust`. Ein Source-Commit-Hash ist noch nicht zugewiesen. Keine Abhängigkeit auf einen ungepushten Remote-Commit und keine Registry-Verfügbarkeit von `0.1.0` voraussetzen.
+Diese Übergabe gilt für Crate-Revision `dfa1d5347a23938e5b8ef9b68f5128dc4c6e3ba9` auf lokalem Branch `task/rust-v1` (kein Remote): Paket `cvd-policy` `0.1.0`, crate root `cvd_policy`, Edition 2021, MSRV 1.88; Crate-Pfad `/home/undef/Projects/skalvar/cvd/cvd_policy/rust`. Version/Pfad begründen keine Registry-Verfügbarkeit.
 
 ## Lokaler Build und Beispiele
 
@@ -11,7 +11,7 @@ Consumer verwenden während dieser Integration ausschließlich den lokalen Path-
 cvd-policy = { path = "/home/undef/Projects/skalvar/cvd/cvd_policy/rust", version = "0.1.0" }
 ```
 
-Das kompilierende Beispiel [`examples/integration.rs`](../examples/integration.rs) zeigt Policy-Parsing und `validate_at`, geprüfte Security.txt-Evidenz, Retrieval-Metadaten, Evaluation und CSAF-Hostbewertung. Der separate Consumer unter [`tools/external-consumer`](../tools/external-consumer/) demonstriert Path-Dependency-Verbrauch. Diese lokalen Artefakte ersetzen weder die konkrete Adapterportierung noch deren Produktvergleich.
+Das Beispiel [`examples/integration.rs`](../examples/integration.rs) wurde mit `cargo +1.88 run --example integration` ausgeführt. Der eigenständige Consumer unter [`tools/external-consumer`](../tools/external-consumer/) wurde gegen den verifizierten entpackten Crate als eigenes Cargo-Workspace-Paket ausgeführt: `report_only`, `publisher-stated-prohibited`, CSAF `Advertised`, Host `usable=true`.
 
 `Policy::to_json()` liefert `Result<String, PolicyError>`. `policy_serialization_failed` ist ein interner Produkt-/Implementierungsfehler bei bereits geprüfter Policy und darf nicht als Permission-Status interpretiert werden. Target-`InputError` ist eine getrennte Fehlergrenze; Core-Policy-Ergebnisse sind die sieben Permission-Statusdomänen. Kein automatischer Node-Fallback bei Rust-Fehler, Panic oder Timeout.
 
@@ -26,26 +26,26 @@ Pfade sind relativ zu `/tmp/opencode/cvd-rust-aeskal-O5FHEZ`. Hashes stehen in d
 | `api/backend/crates/management/src/policy_publish.rs` | Publisher-Aufrufer 585, 1017 | `e929d2d1fcd079f29348f1013f98972a735a8a3cfce40bf9e40c2612e4cb3ca8` |
 | `api/backend/crates/management/src/policy_migration.rs` | Migration-Aufrufer 221, 248 | `c340af05f4c7a84e01b49980abafda5148ce2b2c8036415d39bfc27f565dd339` |
 | `api/backend/crates/management/src/csaf.rs` | separates CSAF-Reportvalidieren 198–200 | `fbf5f6a13672c6c49e7c8f453b3d1cd2cd13cfeb6874b0c395a3932aa5818b02` |
-| `policy-core/src/server.js` | Wrapper/endpoints; `assessPolicyWithCsaf` 331–347; `/v1/assess-policy` response 534–535; `assess-csaf-policy` route without Rust caller; `new Date(input.security_txt.retrieved_at)` 346 | `a4cb0f3fe79b89f05f8e6085381e7daf5b834703fa9981b6a095cab35cd02492` |
+| `policy-core/src/server.js` | Wrapper/endpoints; `assessPolicyWithCsaf` 331–347; `/v1/assess-policy` response 534–535; `assess-csaf-policy` route without dedicated Rust caller; `new Date(input.security_txt.retrieved_at)` 346 | `a4cb0f3fe79b89f05f8e6085381e7daf5b834703fa9981b6a095cab35cd02492` |
 | `policy-core/src/csaf-policy.js` | `policyWithCsafChannels` 24–52 | `58d716a4c2fa4f7450cb5ec916ad05a5c307786fa3deeced20fc1d78a7597f8d` |
 
 ## Endpoint mapping and ownership
 
 | Existing endpoint / wrapper | Rust mapping | Product-owned behavior and compatibility notes |
 |---|---|---|
-| `generate-policy` | `generate_policy` → validate current policy with `validate_at(now)` → `Policy::to_json()` | Preserve product reason/facts, HTTP response shape, and publisher orchestration. Serialization failure is internal/product fault, not a permission decision. |
-| `render-release` | policy validation/serialization as above, plus `security_txt` and `merge_security_txt` where applicable | Release orchestration remains product-owned. Equality of Security.txt expiry and policy expiry is a product release rule, not a general NormDraft rule. Preserve existing response and facts. |
-| `assess-security-txt` | `assess_security_txt(raw, &SecurityTxtRetrieval)` | `text`, `expected_text`, `required_contacts`, `drift`, `reason`, and `facts` remain product wrapper responsibilities. Core returns assessment/evidence, not the product response. |
-| `assess-policy` | `Policy::parse` → `validate_at(current_now)` → `policy_retrieval_issues` and `assess_csaf_for_host` as applicable; map policy decision to product result | Existing Node wrapper calls `assessPolicyWithCsaf`; `/v1/assess-policy` returns `.csaf_host`. Rust `PolicyAssessment` in `deployment.rs` has no `csaf_host` field and serde ignores that extra field. Agent2 must add/map this product response explicitly; do not silently claim direct response parity. Product comparison/reason/facts remain adapter-owned. |
-| `contacts` | Product field validation; no dedicated native Core contacts endpoint | Keep existing product contact checks and response behavior in the adapter. |
-| `assess-csaf-policy` | `assess_csaf_for_host` | The dedicated route has no Rust caller identified, but CSAF is already used indirectly through `assess-policy`; do not omit that path. |
+| `generate-policy` | `generate_policy` → `Policy::validate_at(now)` → `Policy::to_json()` | Preserve product reason/facts, HTTP response shape, and publisher orchestration. Serialization failure is internal/product fault, not a permission decision. |
+| `render-release` | `generate_policy`/parse → `validate_at(now)` → `to_json`, plus `security_txt`, `merge_security_txt`, `assess_security_txt` | Contact preference, encryption, human Policy fields/comparisons, and expiry equality are Aeskal adapter/release rules, not new NormDraft requirements. Preserve product response and facts. |
+| `assess-security-txt` | `assess_security_txt(raw, &SecurityTxtRetrieval)` | Product still compares `text`, `expected_text`, required contacts and expected URI; drift/reason/facts remain adapter-owned. |
+| `assess-security-txt-contacts` | Product contact validation | No native Core endpoint/helper; preserve product contact rules and response. |
+| `assess-policy` | `Policy::parse` → `validate_at(current_now)` → `policy_retrieval_issues` → `assess_csaf_for_host` + product comparison | Node `assessPolicyWithCsaf` at 331–347 returns `.csaf_host` at 534–535. Rust `PolicyAssessment` (`deployment.rs` 173–183) lacks that field and serde ignores it; map the response explicitly. Product reason/facts/comparison remain adapter-owned. |
+| `assess-csaf-policy` | `assess_csaf_for_host(raw, authority, retrieval, &context)` | No dedicated Rust caller identified, but CSAF is already consumed indirectly by `assess-policy`. |
 | `validate-csaf` | No replacement in this crate | Separate CSAF report validator; remains outside this Policy Core. |
 
-In `policyWithCsafChannels`, an undefined value preserves existing policy data; an empty channel list removes only the CSAF extension; a non-empty list writes the exact fixed-specification object. Rust can clone `Policy::value()`, edit only that extension, preserve other extensions, pass the result through `Policy::from_value`, then call `assess_csaf`; no new crate helper is required. Do not mark a new extension critical. The separate report validator is unaffected.
+In `policyWithCsafChannels` (`policy-core/src/csaf-policy.js` lines 24–52) and `declaredCsafChannels` (lines 17–21), undefined preserves the existing policy; an empty list removes only the CSAF extension (and empty extension container); non-empty writes exact channels with fixed specification, without adding `critical_extensions`. Rust can clone `Policy::value()`, edit that extension with the same shape, preserve unrelated extensions, validate via `Policy::from_value`, then call `assess_csaf`; no new Core helper is needed. The separate report validator is unaffected.
 
 ## Fresh time versus historical retrieval
 
-The Node wrapper derives `new Date(input.security_txt.retrieved_at)` at the cited callsite. On reuse, the integrator must pass a fresh current `EvaluationContext::now` separately from historical `SecurityTxtRetrieval::retrieved_at`. The library checks policy and authority freshness against the current context; retrieval timestamp remains historical evidence. Compare old and new outputs using the same saved inputs, without duplicate network fetch, send, or store operations.
+The Node wrapper derives `new Date(input.security_txt.retrieved_at)` at the cited callsite. Do not port that historical timestamp as `now` when reusing evidence. Preserve original `SecurityTxtRetrieval::retrieved_at`; obtain a fresh current `EvaluationContext::now` from the caller. Policy expiry and authority expiry are reevaluated against current context. Compare outputs using the same saved inputs, without duplicate discovery/fetch, send, or store operations.
 
 Discovery, HTTP retrieval, TLS/credential checks, redirects as observed by transport, response/status adaptation, product reason/facts, contact checks, expected-document drift, and publication remain adapter/transport/publisher responsibilities. No claim that these have been ported or verified. The external consumer's `report_only`/advertised-host demonstration is evidence of that example consumer behavior only, not full Node interoperability.
 
@@ -59,4 +59,4 @@ Only after adapter mapping and output comparison are demonstrated should Agent2 
 
 ## Remaining final gates
 
-No source commit hash is claimed yet. Manager's native tests are reported separately; final commit hash and remaining integration/package/CI gates are still to be supplied. Do not state those gates passed before their execution.
+The source commit listed above is the reviewed implementation revision, not a self-referential documentation commit. Remaining obligations: Agent2 product endpoint/response mapping and cutover, consumer `serde_json/arbitrary_precision` feature-unification review of JSON roundtrips, and any final revalidation after documentation commit. Do not automatically fall back to Node on Rust errors/panics/timeouts; after proven cutover remove only superseded wrappers/dependencies, not unrelated Node dependencies.

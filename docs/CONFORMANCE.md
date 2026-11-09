@@ -28,13 +28,13 @@ Der Manager meldet einen bestandenen 220-Fall-Replay mit identischen gespeichert
 
 ### Eingeordnete Verhaltensdeltas aus dem Replay
 
-Die zwölf Unterschiede sind keine pauschale Gleichheitsbehauptung. Ein Unterschied ist eine erlaubte interne Evidenzdarstellung; die übrigen sind Verhaltensdeltas, die fachlich gegen die Norm zu bewerten sind. Normative Fixtures/Erwartungen wurden nicht verändert.
+Die zwölf abweichenden Zeilen umfassen zwei zulässige interne Authority-Getter-Repräsentationen und zehn TypeScript-Verhaltensabweichungen in Zahlen, URI, Zeit und RFC 9116. Im geprüften Fallbestand ist keine ungeklärte Rust-Abweichung bekannt; dies ist keine pauschale Produkt-Drop-in-Freigabe. Normative Fixtures/Erwartungen wurden nicht verändert.
 
 | Gruppe / Fallreferenz | Beobachtung | Normative Einordnung |
 |---|---|---|
-| Security.txt URI getter (AuthorityEvidence) | Rust-Getter liefert ursprüngliche angefragte URI, TypeScript finale URI | Erlaubte interne Evidenzdarstellung; Normbindung bleibt gleich, kein byteweises Mappingversprechen. |
+| Security.txt URI getter (zwei AuthorityEvidence-Fälle) | Rust-Getter liefert ursprüngliche angefragte URI, TypeScript finale URI | Zulässige interne Evidenzdarstellung; Normbindung bleibt gleich, kein byteweises Mappingversprechen. |
 | `security-rfc9116-space-after-colon` | Rust akzeptiert RFC 9116 `:` gefolgt von SP strenger als TS | Norm: RFC 9116 Feldsyntax verlangt Colon-SP; TS-Toleranz ist kein Normmaßstab. |
-| Integer version rounding/overflow (numeric-URI regressions) | TS-Zahlrepräsentation rundet bzw. läuft bei Integerfällen über, Rust prüft exakt | Norm verlangt mathematischen JSON-Integer und Version 1; Rust-Verhalten ist maßgeblich. |
+| Zwei Integer version rounding/overflow-Fälle (numeric-URI regressions) | TS-Zahlrepräsentation rundet bzw. läuft bei Integerfällen über, Rust prüft exakt | Norm verlangt mathematischen JSON-Integer und Version 1; Rust-Verhalten ist maßgeblich. |
 | Fünf URI-Fragmentfälle (organization, contact channel, encryption, product identifier, extension identifier; numeric-URI regressions) | TS lässt Fragmente an absoluten URI-Feldern durch, Rust weist zurück | Norm bindet an absolute URI nach RFC 3986 §4.3; Fragment ist ausgeschlossen. |
 | Sub-millisecond expiry (`time-probe`) | TS `Date` vergleicht Millisekunden, Rust bewahrt RFC-3339-Submillisekunden | Norm vergleicht Zeitpunkte als RFC-3339-Instants; Rust-Präzision entspricht der Norm. |
 | `numeric-permission-exact-decimal-condition` | TS rundet nahe Dezimalwerte und meldet permitted; Rust vergleicht exakt und meldet conditions-not-satisfied | Norm-Ratenvergleich ist mathematisch; exakte Dezimalentscheidung ist maßgeblich. |
@@ -50,6 +50,6 @@ Der Replaybericht enthält die konkreten Case-IDs und Begründungen. Die Spec-Qu
 | Stable Gates | stable `fmt`, all-target Clippy | Bestanden | Managerbericht | Gemeldet bestanden |
 | Kompilierendes Beispiel | `cargo +1.88 run --example integration` | `report_only`, `publisher-stated-prohibited`, CSAF `Advertised`, `usable=true` | Managerbericht | Gemeldet bestanden |
 | 220-Fall-Replay | Identische gespeicherte Inputs; gepinnter TS-Core | Bestanden; Request SHA-256 `3d787d16bf28d51abaf7c446fe32c2dbf9f91f367255262f86a71b44e6d5cefd` | `tools/interop/artifacts/report.json` | Gemeldet bestanden; keine Produkt-Cutover-Freigabe |
-| Packaging-Archivconsumer | Lokales Package/Archiv in echtem Consumer | Noch nicht verifiziert | — | Offen |
+| Packaging-Archivconsumer | `cargo +stable package --list --offline --locked` und `cargo +stable package --offline --locked`; 124 Dateien, anschließender entpackter eigenständiger Consumer unter MSRV | Paket 1.8 MiB / 213 KiB komprimiert; Archivconsumer-Tests vollständig bestanden | `.cargo_vcs_info` SHA-1 `dfa1d5347a23938e5b8ef9b68f5128dc4c6e3ba9`; Managerbericht | Gemeldet bestanden |
 | Remote-CI | Workflow nicht remote ausgeführt | Nicht ausgeführt | — | Offen |
-| Produkt-Cutover | Agent2 Endpoint-Mapping, Response und Feature-Unification | Nicht freigegeben | — | Offen |
+| Produkt-Cutover | Agent2 Endpoint-Mapping, Response und `serde_json/arbitrary_precision` Feature-Unification | Nicht freigegeben | — | Offen |
