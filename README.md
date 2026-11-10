@@ -1,82 +1,81 @@
 # cvd-policy
 
-Deterministischer Rust-Core zum Parsen, Validieren und lokalen Auswerten von CVD Policy Version 1. Dies ist eine eigenständige zweite Codeimplementierung, keine unabhängige Implementierung durch eine zweite Organisation. Repository: [cvd-policy/cvd-policy-rs](https://github.com/cvd-policy/cvd-policy-rs).
+[![CI](https://github.com/cvd-policy/cvd-policy-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/cvd-policy/cvd-policy-rs/actions/workflows/ci.yml)
 
-## Paket und Status
+A Rust library for parsing, validating, and locally evaluating the experimental CVD Policy Format Version 1 (Draft-01). It also assesses `security.txt` authority evidence and CSAF 2.1 CSD04 Vulnerability Report (Profile 9) declarations.
 
-- Paket `cvd-policy` 0.1.0, Bibliotheksmodul `cvd_policy`
-- Edition 2021, MSRV Rust 1.88 (geprüft)
-- Lizenz des Rust-Codes: Apache-2.0; vendorte Spec-/Corpus-Quellen behalten ihre eigenen Lizenzen
-- Keine Netzwerk- oder Dateisystem-I/O und kein Zugriff auf die Systemuhr im Core; Zeit kommt explizit vom Aufrufer
+## Features
 
-## Release-Status
+- Duplicate-safe UTF-8 JSON parsing with exact numeric values.
+- Immutable, statically validated policies; current validity is checked explicitly with `validate_at(now)`.
+- Permission evaluation with seven policy-result statuses, separate from target-input errors.
+- `security.txt` evidence assessment and local CSAF assessment (four declaration states and host-usability assessment).
+- No runtime Node.js/process dependency, network or DNS access, or system-clock reads. Callers provide retrieval facts and evaluation time.
 
-Die crates.io-Veröffentlichung steht noch aus; `cvd-policy` 0.1.0 ist derzeit nicht verfügbar. Release-Ablauf und Bootstrap: [`docs/RELEASING.md`](docs/RELEASING.md).
+This is a local policy core, not a complete intake or reporting client. It does not fetch policies, validate CSAF report documents, submit reports, or send reports automatically. A declaration or capability assessment does not itself establish live host behavior; use the full evidence and current-time gates for host assessment.
 
-Manager-gemeldete Prüfungen: offline/locked und ohne Node/npm im PATH auf Rust 1.88.0 liefen 101 Unit-, 7 Conformance-Loop-, 1 Interop-Fixture-, 1 Provenienz- und 9 Doctests; 0 übersprungen, 0 Warnungen. Die Conformance-Loops umfassen 198 Baseline-Vektoren (10 valid, 47 invalid, 8 raw-invalid, 19 Security.txt, 55 Evaluation, 42 CSAF, 17 URI), hinzu kommen 14 native Interop-Extras. MSRV no-default-features Tests, MSRV all-target/all-feature Clippy `-Dwarnings` und MSRV rustdoc `-Dwarnings` bestanden. Stable `fmt` und all-target Clippy ebenfalls bestanden. `cargo +1.88 run --example integration` bestand: `report_only`, Permission `publisher-stated-prohibited`, CSAF `Advertised`, Host `usable=true`. Der 220-Fall-Replay mit identischen gespeicherten Inputs bestand; Request-SHA-256 `3d787d16bf28d51abaf7c446fe32c2dbf9f91f367255262f86a71b44e6d5cefd`, committierbarer Bericht [`tools/interop/artifacts/report.json`](tools/interop/artifacts/report.json), zusätzlicher Replaybericht `/tmp/opencode/cvd-rust-interop-replay/report.json`. Zwölf abweichende Ergebniszeilen (zwei interne Darstellungsfälle, zehn TypeScript-Verhaltensabweichungen) sind in [`docs/CONFORMANCE.md`](docs/CONFORMANCE.md) normativ eingeordnet. Packaging einschließlich verifiziertem Archivconsumer ist bestanden; Remote-CI und Produkt-Cutover bleiben offen. Dies ist keine pauschale Drop-in-Freigabe.
+## Install
 
-## Quellen
-
-NormDraft-01 und Fixtures sind unter `vendor/spec/`; Originalquelle Spec-Commit `955f01c67391c832c970661329c7da5fdbf011af`. Der Web-Core-Vergleich stammt von `2e63a73ac1a04d31fc9fca8dec6cc256ccf963b4`; die Tests gegen diese Referenz sind Entwicklungs-/Interop-Werkzeuge, nicht Build-Voraussetzung für die Library. Quellinventar und Lizenzzuordnung stehen in [`vendor/SOURCES.json`](vendor/SOURCES.json) und [`NOTICE.md`](NOTICE.md).
-
-## Öffentliche API
-
-Die Namen und Typen unten entsprechen den Root-Exports in [`src/lib.rs`](src/lib.rs). Sie sind Signaturskizzen, keine kopierbaren vollständigen Rust-Ausdrücke:
-
-```text
-Policy::parse(&[u8]) -> Result<Policy, PolicyError>
-Policy::from_value(Value) -> Result<Policy, PolicyError>
-Policy::value(&self) -> &Value
-Policy::to_json(&self) -> Result<String, PolicyError>
-Policy::validate_at(&self, now: &Timestamp) -> Result<(), PolicyError>
-
-evaluate_policy(
-    raw: &[u8],
-    query: &EvaluationQuery,
-    authority: Option<&AuthorityEvidence>,
-    context: &EvaluationContext,
-) -> Result<PermissionResult, InputError>
-
-assess_security_txt(raw: &[u8], retrieval: &SecurityTxtRetrieval) -> AuthorityAssessment
-assess_csaf(raw: &[u8]) -> Result<CsafAssessment, PolicyError>
-assess_csaf_for_host(
-    raw: &[u8],
-    authority: Option<&AuthorityEvidence>,
-    retrieval: Option<&PolicyRetrieval>,
-    context: &EvaluationContext,
-) -> CsafHostAssessment
-
-generate_policy(input: Value) -> Result<Policy, PolicyError>
-security_txt(policy: &Policy, options: &SecurityTxtOptions) -> Result<String, InputError>
-merge_security_txt(raw: &str, policy_uri: &str) -> Result<String, InputError>
-policy_retrieval_issues(...) -> Vec<Diagnostic>
-```
-
-`CsafAssessment` has a four-state `state` (`CsafState`), channels, and diagnostics. `CsafHostAssessment` has `usable`, `capability: Result<CsafAssessment, PolicyError>`, and diagnostics; its `&EvaluationContext` is required. Root exports also include `CsafChannel`, `CSAF_EXTENSION_ID`, `CSAF_SPECIFICATION`, `SecurityTxtOptions`, `NormalizedTarget`, `ParseLimits`, timestamps, query/retrieval/evaluation types, and error types. Number/URI helpers are internal, not a public toolkit module.
-
-`Policy` validates static structure and semantics and is immutable; required `expires` remains part of its value. `validate_at(now)` must be called for every current use, and authority evidence expiry is also reevaluated against that current context. A `SecurityTxtRetrieval.retrieved_at` is historical retrieval evidence, not the current evaluation time. `EvaluationContext::new(now)` makes time explicit.
-
-`to_json()` errors use diagnostic `policy_serialization_failed`. Since the Policy was already checked, this is an internal/product fault, never a permission decision. Handle it or deliberately `.expect(...)` only where the invariant is justified. Target `InputError` is separate from the seven permission-result statuses. `AuthorityEvidence` is only produced through assessment; `security_txt_uri()` intentionally reports the originally requested URI, not necessarily the final redirect URI. This is an allowed internal representation difference, not a normative failure or a byte-for-byte evidence mapping claim. No TLS or signature cryptographic verification is claimed.
-
-## Parsing and exact values
-
-Default limits: 1 MiB input, nesting depth 64, and 100,000 JSON nodes/member names; configured depth is clamped to a hard ceiling of 256. Number lexemes are limited to 4,096 bytes. Strings require Unicode scalar values; unpaired surrogate escapes are rejected as an implementation representation limit, not an added NormDraft MUST. Exact arbitrary-precision numbers are retained. URI parsing rejects illegal raw characters rather than repairing them and preserves percent-encoded octets.
-
-Runtime dependencies are `fluent-uri` (URI syntax), `language-tags` (language validation), `num-bigint` (exact decimal comparison), `serde` (typed serialization), `serde_json` with mandatory `arbitrary_precision` (JSON and exact numbers), `time` (explicit timestamps), and `url` (host/URL parsing). `sha2` is a dev-dependency for provenance checks. Cargo feature unification means enabling `serde_json/arbitrary_precision` may affect consumer `Value`/`Number` behavior; integration must inspect JSON roundtrips rather than disable this required feature. The crate's custom raw parser is not equivalent to ordinary consumer `serde_json::Value` deserialization.
-
-## Local use
-
-Use the local path dependency only; no unpublished remote commit or registry package is implied:
+The reviewed library commit is available from the public Git repository:
 
 ```toml
 [dependencies]
-cvd-policy = { path = "/home/undef/Projects/skalvar/cvd/cvd_policy/rust", version = "0.1.0" }
+cvd-policy = { git = "https://github.com/cvd-policy/cvd-policy-rs.git", rev = "8800a50fca690d75b72e35d897588dbf83b875dc" }
 ```
 
-[`examples/integration.rs`](examples/integration.rs) compiles under Rust 1.88 and exercises parsing, explicit-time validation, security.txt evidence, evaluation, and CSAF host assessment. Manager ran it successfully with `report_only`, Permission `publisher-stated-prohibited` (not positive), CSAF `Advertised`, and Host `usable=true`. [`tools/external-consumer`](tools/external-consumer/) is an additional local consumer.
+The Cargo package is `cvd-policy`; its Rust library module is `cvd_policy`. The minimum supported Rust version is 1.88. The crate is not yet published on crates.io. Its first registry publication and Trusted Publisher setup remain manual; see [Release and publishing](docs/RELEASING.md).
 
-## Boundaries and interoperability
+## Example
 
-The core does not discover/fetch, publish releases, submit CSAF reports, validate CSAF report documents, or assert that advertised channels actually receive reports. Those remain product/adapter/transport/publisher responsibilities. See the concrete endpoint mapping and cutover obligations in [`docs/INTEGRATION.md#produktquellen-und-snapshot-belege`](docs/INTEGRATION.md#produktquellen-und-snapshot-belege) and the 85-requirement evidence matrix in [`docs/requirements.md`](docs/requirements.md).
+Parse a policy and check its expiry against an explicit time:
 
-The reviewed source revision is `dfa1d5347a23938e5b8ef9b68f5128dc4c6e3ba9` on local branch `task/rust-v1` (no remote at that checkpoint). The 220-case replay passed on identical saved inputs (198 baseline + 22 extras), request SHA-256 `3d787d16bf28d51abaf7c446fe32c2dbf9f91f367255262f86a71b44e6d5cefd`; see `tools/interop/artifacts/report.json`. Of twelve differing rows, two are allowed internal Authority getter representations and ten are TypeScript behavior differences classified against NormDraft/RFC in [`docs/CONFORMANCE.md`](docs/CONFORMANCE.md). No unresolved Rust result is known in the reviewed set, but this is not universal equivalence or product cutover approval. The archive consumer is verified; Remote-CI and product cutover remain open. Do not add automatic Node fallback on errors, panic, or timeout.
+```rust
+use cvd_policy::{Policy, Timestamp};
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let raw = br#"{
+      "cvd_policy": 1,
+      "last_updated": "2026-08-29T08:00:00Z",
+      "expires": "2027-02-28T08:00:00Z",
+      "organization": { "name": "Example Organization" },
+      "contact": { "channels": ["mailto:security@example.com"] },
+      "research": { "posture": "report_only" },
+      "reporting_scope": { "web": [{
+        "id": "main-web", "state": "in", "host": "example.com",
+        "schemes": ["https"], "path_prefix": "/", "include_subdomains": false
+      }] },
+      "reporting": {
+        "requested_fields": ["affected_asset", "description"],
+        "proof_of_exploitation": "not_requested"
+      }
+    }"#;
+
+    let policy = Policy::parse(raw)?;
+    let now = Timestamp::parse("2026-11-08T12:00:00Z")?;
+    policy.validate_at(&now)?;
+    println!("policy parsed and valid at {now}");
+    Ok(())
+}
+```
+
+Static parsing and validation do not replace `validate_at` for each current use. The timestamp above is only an example: applications must provide the current evaluation time on every use, not a historical retrieval timestamp. This example makes no claim about a retrieved or live host. For the complete retrieval-evidence and host-assessment flow, see [`examples/integration.rs`](examples/integration.rs).
+
+## Checks and scope
+
+The GitHub Actions CI workflow checks Rust 1.88 and stable. The native conformance suite covers 198 normative baseline vectors; the 220-case Rust/TypeScript comparison is documented in [Conformance and evidence](docs/CONFORMANCE.md). Known comparison differences are documented; this is not a claim of universal interoperability.
+
+Run the local checks with:
+
+```sh
+cargo test --locked
+cargo run --locked --example integration
+cargo fmt --all -- --check
+cargo clippy --all-targets --all-features -- -D warnings
+cargo doc --no-deps
+```
+
+For API usage and integration considerations, see [`docs/INTEGRATION.md`](docs/INTEGRATION.md). The normative Draft-01 source is [`vendor/spec/draft/draft-behring-cvd-policy.md`](vendor/spec/draft/draft-behring-cvd-policy.md); source and license provenance is recorded in [`vendor/SOURCES.json`](vendor/SOURCES.json) and [`NOTICE.md`](NOTICE.md).
+
+## Integration note
+
+The crate enables `serde_json/arbitrary_precision`; Cargo feature unification can affect consumers' `serde_json::Value`/`Number` behavior. Check consumer JSON roundtrips before integration. Default parser limits are 1 MiB input, nesting depth 64, 100,000 JSON nodes/member names, and 4,096 bytes per number lexeme; see the API and conformance documentation for details.
