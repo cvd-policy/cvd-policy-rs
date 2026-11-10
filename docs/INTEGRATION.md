@@ -61,6 +61,17 @@ Only after adapter mapping and output comparison are demonstrated should Agent2 
 
 The source commit listed above is the reviewed implementation revision, not a self-referential documentation commit. Remaining obligations: Agent2 product endpoint/response mapping and cutover, consumer `serde_json/arbitrary_precision` feature-unification review of JSON roundtrips, and any final revalidation after documentation commit. Do not automatically fall back to Node on Rust errors/panics/timeouts; after proven cutover remove only superseded wrappers/dependencies, not unrelated Node dependencies.
 
+## Registry dependency
+
+Version `0.1.1` is published on crates.io:
+
+```toml
+[dependencies]
+cvd-policy = "0.1.1"
+```
+
+A separate Rust 1.88 consumer downloaded this registry version from crates.io, compiled and ran with Node/npm absent from `PATH`, and confirmed `parse=valid`, established authority, `publisher-stated-prohibited` (not permission to test), CSAF `advertised`, and `usable=true` for the report-only example. Product cutover remains open.
+
 ## Git dependency
 
 Use the reviewed Library commit directly from the public repository:
@@ -70,4 +81,4 @@ Use the reviewed Library commit directly from the public repository:
 cvd-policy = { git = "https://github.com/cvd-policy/cvd-policy-rs.git", rev = "8800a50fca690d75b72e35d897588dbf83b875dc" }
 ```
 
-The public GitHub API confirmed this ancestor commit is reachable from `origin/main`. A manager verified a Rust 1.88 consumer build fetched directly from this Git URL and commit, without Node in `PATH`; it parsed the policy, established authority, returned `publisher-stated-prohibited`, assessed CSAF as advertised, and reported `usable=true`. Product cutover remains open. Version [`0.1.0`](https://crates.io/crates/cvd-policy/0.1.0) is published on crates.io; see [`RELEASING.md`](RELEASING.md).
+The public GitHub API confirmed this ancestor commit is reachable from `origin/main`. A manager verified a Rust 1.88 consumer build fetched directly from this Git URL and commit, without Node in `PATH`; it parsed the policy, established authority, returned `publisher-stated-prohibited`, assessed CSAF as advertised, and reported `usable=true`. Product cutover remains open. Version [`0.1.1`](https://crates.io/crates/cvd-policy/0.1.1) is published on crates.io; see [`RELEASING.md`](RELEASING.md).
