@@ -70,4 +70,4 @@ Use the reviewed Library commit directly from the public repository:
 cvd-policy = { git = "https://github.com/cvd-policy/cvd-policy-rs.git", rev = "8800a50fca690d75b72e35d897588dbf83b875dc" }
 ```
 
-The public GitHub API confirmed this ancestor commit is reachable from `origin/main`. A manager verified a Rust 1.88 consumer build fetched directly from this Git URL and commit, without Node in `PATH`; it parsed the policy, established authority, returned `publisher-stated-prohibited`, assessed CSAF as advertised, and reported `usable=true`. Product cutover remains open. The crate is not yet published to crates.io; see [`RELEASING.md`](RELEASING.md).
+The public GitHub API confirmed this ancestor commit is reachable from `origin/main`. A manager verified a Rust 1.88 consumer build fetched directly from this Git URL and commit, without Node in `PATH`; it parsed the policy, established authority, returned `publisher-stated-prohibited`, assessed CSAF as advertised, and reported `usable=true`. Product cutover remains open. Version [`0.1.0`](https://crates.io/crates/cvd-policy/0.1.0) is published on crates.io; see [`RELEASING.md`](RELEASING.md).

@@ -16,14 +16,21 @@ This is a local policy core, not a complete intake or reporting client. It does 
 
 ## Install
 
-The reviewed library commit is available from the public Git repository:
+Install the published crate from crates.io:
+
+```toml
+[dependencies]
+cvd-policy = "0.1"
+```
+
+The Cargo package is `cvd-policy`; its Rust library module is `cvd_policy`. The minimum supported Rust version is 1.88. Version 0.1.0 is published on [crates.io](https://crates.io/crates/cvd-policy). A reviewed source commit is also available from Git:
 
 ```toml
 [dependencies]
 cvd-policy = { git = "https://github.com/cvd-policy/cvd-policy-rs.git", rev = "8800a50fca690d75b72e35d897588dbf83b875dc" }
 ```
 
-The Cargo package is `cvd-policy`; its Rust library module is `cvd_policy`. The minimum supported Rust version is 1.88. The crate is not yet published on crates.io. Its first registry publication and Trusted Publisher setup remain manual; see [Release and publishing](docs/RELEASING.md).
+The first publication and Trusted Publisher setup are complete. The tagged automated release path has not yet been run; see [Release and publishing](docs/RELEASING.md).
 
 ## Example
 

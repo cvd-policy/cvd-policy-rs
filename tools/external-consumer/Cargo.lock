@@ -16,7 +16,7 @@ checksum = "dc0b364ead1874514c8c2855ab558056ebfeb775653e7ae45ff72f28f8f3166c"
 
 [[package]]
 name = "cvd-policy"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "fluent-uri",
  "language-tags",
